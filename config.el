@@ -32,7 +32,7 @@
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
 ;; `load-theme' function. This is the default:
-(setq doom-theme 'doom-one)
+;; (setq doom-theme 'doom-one)
 
 ;; This determines the style of line numbers in effect. If set to `nil', line
 ;; numbers are disabled. For relative line numbers, set this to `relative'.
@@ -77,6 +77,16 @@
 ;; What follows are my (Alec's) custom configuration:
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Display theme
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; (setq doom-theme 'doom-challenger-deep)
+;; (setq doom-theme 'doom-snazzy)
+;; (setq doom-theme 'doom-vibrant)
+;; (setq doom-theme 'doom-peacock)
+;; (setq doom-theme 'doom-henna) ;; Favorite
+(setq doom-theme 'doom-homage-black) ;; Favorite
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Make bookmarks auto-persist to disk
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq bookmark-save-flag 1)
@@ -84,9 +94,9 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup to make active windows more pronounced (consider turning off eventually)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(use-package! auto-dim-other-buffers
-  :config
-  (add-hook! 'doom-first-input-hook #'auto-dim-other-buffers-mode))
+;; (use-package! auto-dim-other-buffers
+  ;; :config
+  ;; (add-hook! 'doom-first-input-hook #'auto-dim-other-buffers-mode))
 
 (setq-default cursor-in-non-selected-windows nil)
 (setq highlight-nonselected-windows nil)
@@ -113,23 +123,8 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package! gptel
   :config
-;;   ;; Automatically look up the apikey entry for api.googe.com from ~/authinfo
+  ;; Automatically look up the apikey entry for api.googe.com from ~/authinfo
   (setq gptel-api-key #'gptel-api-key-from-auth-source)
-;;         ;; (lambda ()
-;;           ;; (secret-search-forward "machine" "api.google.com" "password")))
-
-;;   ;; Register Google's Gemini backend environment
-;;   (gptel-make-gemini "Gemini" :key gptel-api-key :stream t)
-
-;;   ;; Configure Doom's default interface behavior
-;;   (setq gptel-backend (gptel-make-gemini "Gemini" :key gptel-api-key)
-;;         gptel-model "gemini-3.1-flash-lite")) ; or use "gemini-1.5-pro"
-;;         ;; gptel-model "gemini-flash-latest")) ; or use "gemini-1.5-pro"
-
-;; (use-package! gptel
-  ;; :config
-  ;; Auth-source closure mapping
-  ;; (setq gptel-api-key (lambda () (gptel-api-key-from-auth-source "://googleapis.com")))
 
   ;; Register Google's Gemini backend environment AND map the exact models inside the
   ;; system list
