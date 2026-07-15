@@ -146,3 +146,21 @@
 ;; Set the keybinding
 (map! :leader
       :desc "Open GPTel Chat" "o a" #'gptel)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; TO DO
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; eww browser bookmarks (for pages that work without JavaScript, i.e. Bevy Docs)
+;; Additional LLM models (Open AI, Anthropic)
+;; Weather
+;; Email
+;; Learn doom emacs projects
+;; org-roam
+;; org-mode time tracking
+;; org-mode capture templates
+;; e-reader/ebook manager
+;; Financial management (either through org-mode or a dedicated package)
