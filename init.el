@@ -199,3 +199,6 @@
        :config
        ;;literate
        (default +bindings +smartparens))
+
+;; Set alpha background to enable frosted glass effect in COSMIC
+(add-to-list `default-frame-alist `(alpha-background . 85))
