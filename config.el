@@ -74,11 +74,16 @@
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
 
+;; What follows are my (Alec's) custom configuration:
 
-;; ALEC CUSTOM: Make bookmarks auto-persist to disk
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Make bookmarks auto-persist to disk
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq bookmark-save-flag 1)
 
-;; ALEC CUSTOM: Setup to make active windows more pronounced
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Setup to make active windows more pronounced (consider turning off eventually)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (use-package! auto-dim-other-buffers
   :config
   (add-hook! 'doom-first-input-hook #'auto-dim-other-buffers-mode))
@@ -86,10 +91,58 @@
 (setq-default cursor-in-non-selected-windows nil)
 (setq highlight-nonselected-windows nil)
 
-;; ALEC CUSTOM: force Doom to use rust-ts-mode
-;;(add-to-list `auto-mode-alist `("\\.rs\\" . rust-ts-mode))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Rust development setup
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (with-eval-after-load 'treesit
   (add-to-list 'treesit-language-source-alist
     '(rust "https://github.com/tree-sitter/tree-sitter-rust" "v0.23.2")))
 (after! rustic
   (set-tree-sitter! 'rustic-mode 'rust-mode))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Web browsing and web search
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(map! :leader
+      :desc "Search the web with EWW" "s w" #'eww)
+;; (after! eww ;; Doesn't work, because google requires javascript
+;; (setq eww-search-prefix "https://google.com/search?q="))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Configure gptel AI/LLM package
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package! gptel
+  :config
+;;   ;; Automatically look up the apikey entry for api.googe.com from ~/authinfo
+  (setq gptel-api-key #'gptel-api-key-from-auth-source)
+;;         ;; (lambda ()
+;;           ;; (secret-search-forward "machine" "api.google.com" "password")))
+
+;;   ;; Register Google's Gemini backend environment
+;;   (gptel-make-gemini "Gemini" :key gptel-api-key :stream t)
+
+;;   ;; Configure Doom's default interface behavior
+;;   (setq gptel-backend (gptel-make-gemini "Gemini" :key gptel-api-key)
+;;         gptel-model "gemini-3.1-flash-lite")) ; or use "gemini-1.5-pro"
+;;         ;; gptel-model "gemini-flash-latest")) ; or use "gemini-1.5-pro"
+
+;; (use-package! gptel
+  ;; :config
+  ;; Auth-source closure mapping
+  ;; (setq gptel-api-key (lambda () (gptel-api-key-from-auth-source "://googleapis.com")))
+
+  ;; Register Google's Gemini backend environment AND map the exact models inside the
+  ;; system list
+  (setq gptel-backend
+        (gptel-make-gemini "Gemini"
+          :key gptel-api-key
+          :stream t
+          ;; CRITICAL: Register the exact strings so gptel doesn't panic and use Pro
+          :models '("gemini-3.1-flash-lite" "gemini-3.5-flash")))
+
+  ;; Set the active default globally
+  (setq gptel-model "gemini-3.5-flash"))
+
+;; Set the keybinding
+(map! :leader
+      :desc "Open GPTel Chat" "o a" #'gptel)
