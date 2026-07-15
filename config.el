@@ -73,3 +73,15 @@
 ;;
 ;; You can also try 'gd' (or 'C-c c d') to jump to their definition and see how
 ;; they are implemented.
+
+
+;; ALEC CUSTOM: Make bookmarks auto-persist to disk
+(setq bookmark-save-flag 1)
+
+;; ALEC CUSTOM: Setup to make active windows more pronounced
+(use-package! auto-dim-other-buffers
+  :config
+  (add-hook! 'doom-first-input-hook #'auto-dim-other-buffers-mode))
+
+(setq-default cursor-in-non-selected-windows nil)
+(setq highlight-nonselected-windows nil)
