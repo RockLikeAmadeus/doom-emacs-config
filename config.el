@@ -85,3 +85,11 @@
 
 (setq-default cursor-in-non-selected-windows nil)
 (setq highlight-nonselected-windows nil)
+
+;; ALEC CUSTOM: force Doom to use rust-ts-mode
+;;(add-to-list `auto-mode-alist `("\\.rs\\" . rust-ts-mode))
+(with-eval-after-load 'treesit
+  (add-to-list 'treesit-language-source-alist
+    '(rust "https://github.com/tree-sitter/tree-sitter-rust" "v0.23.2")))
+(after! rustic
+  (set-tree-sitter! 'rustic-mode 'rust-mode))
