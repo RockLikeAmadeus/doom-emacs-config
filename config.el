@@ -40,7 +40,11 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+;; (setq org-directory "~/org/")
+(setq org-directory (expand-file-name (getenv "SECONDBRAIN")))
+(setq org-agenda-files
+      (list (expand-file-name "urh/" (getenv "SECONDBRAIN"))
+            (expand-file-name "urh/inbox.org" (getenv "SECONDBRAIN"))))
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -90,6 +94,15 @@
 ;; Make bookmarks auto-persist to disk
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq bookmark-save-flag 1)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Org Settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(after! org
+  (setq org-use-fast-todo-selection t)
+  (setq org-todo-keywords
+      '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "MEETING(m)" "SOMEDAY(s)" "|" "DONE(x)" "CANCELLED(c)" "DELEGATED(d)"))))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup to make active windows more pronounced (consider turning off eventually)
