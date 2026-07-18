@@ -40,7 +40,11 @@
 
 ;; If you use `org' and don't want your org files in the default location below,
 ;; change `org-directory'. It must be set before org loads!
-(setq org-directory "~/org/")
+;; (setq org-directory "~/org/")
+(setq org-directory (expand-file-name (getenv "SECONDBRAIN")))
+(setq org-agenda-files
+      (list (expand-file-name "urh/tasks/" (getenv "SECONDBRAIN"))
+            (expand-file-name "urh/inbox.org" (getenv "SECONDBRAIN"))))
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -92,6 +96,29 @@
 (setq bookmark-save-flag 1)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Org Settings
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(after! org
+  (setq org-use-fast-todo-selection t)
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "MEETING(m)" "SOMEDAY(s)" "|" "DONE(x)" "CANCELLED(c)" "DELEGATED(d)")))
+  (setq org-agenda-clockreport-parameter-plist
+        '(:maxlevel 3
+          :step day)))
+(map! :leader
+      :prefix "o"
+      :desc "Org agenda" "a" #'org-agenda)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Org Settings - Time Tracking
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq org-clock-persist 'history)
+(org-clock-persistence-insinuate)
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup to make active windows more pronounced (consider turning off eventually)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; (use-package! auto-dim-other-buffers
@@ -140,7 +167,7 @@
 
 ;; Set the keybinding
 (map! :leader
-      :desc "Open GPTel Chat" "o a" #'gptel)
+      :desc "Open GPTel Chat" "o A" #'gptel)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Configure nov.el epub reader
