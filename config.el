@@ -43,7 +43,7 @@
 ;; (setq org-directory "~/org/")
 (setq org-directory (expand-file-name (getenv "SECONDBRAIN")))
 (setq org-agenda-files
-      (list (expand-file-name "urh/" (getenv "SECONDBRAIN"))
+      (list (expand-file-name "urh/tasks/" (getenv "SECONDBRAIN"))
             (expand-file-name "urh/inbox.org" (getenv "SECONDBRAIN"))))
 
 
@@ -102,7 +102,21 @@
 (after! org
   (setq org-use-fast-todo-selection t)
   (setq org-todo-keywords
-      '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "MEETING(m)" "SOMEDAY(s)" "|" "DONE(x)" "CANCELLED(c)" "DELEGATED(d)"))))
+        '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "MEETING(m)" "SOMEDAY(s)" "|" "DONE(x)" "CANCELLED(c)" "DELEGATED(d)")))
+  (setq org-agenda-clockreport-parameter-plist
+        '(:maxlevel 3
+          :step day)))
+(map! :leader
+      :prefix "o"
+      :desc "Org agenda" "a" #'org-agenda)
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Org Settings - Time Tracking
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(setq org-clock-persist 'history)
+(org-clock-persistence-insinuate)
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup to make active windows more pronounced (consider turning off eventually)
@@ -153,7 +167,7 @@
 
 ;; Set the keybinding
 (map! :leader
-      :desc "Open GPTel Chat" "o a" #'gptel)
+      :desc "Open GPTel Chat" "o A" #'gptel)
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
