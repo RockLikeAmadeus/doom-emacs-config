@@ -55,3 +55,4 @@
 (package! auto-dim-other-buffers)
 (package! gptel :recipe (:nonrecursive t)) ;; AI/LLM package
 (package! inheritenv)
+(package! nov)
