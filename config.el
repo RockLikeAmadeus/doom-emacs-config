@@ -158,6 +158,8 @@
   (require 'inheritenv)
   (require 'rustic-doc))
 
+(setq lsp-rust-analyzer-cargo-target-dir t) ;; To prevent analyzer locking build dir
+
 ;; Web browsing and web search
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (map! :leader
