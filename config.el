@@ -1,5 +1,12 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
+;; SYSTEM-WIDE EMERGENCY FIX: Stop rustic macro compilation crashes
+(unless (fboundp 'rustic--inheritenv)
+  (defmacro rustic--inheritenv (&rest body)
+    `(if (featurep 'inheritenv)
+         (inheritenv-apply (lambda () ,@body))
+       ,@body)))
+
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
 
@@ -87,8 +94,8 @@
 ;; (setq doom-theme 'doom-snazzy)
 ;; (setq doom-theme 'doom-vibrant)
 ;; (setq doom-theme 'doom-peacock)
-;; (setq doom-theme 'doom-henna) ;; Favorite
-(setq doom-theme 'doom-homage-black) ;; Favorite
+(setq doom-theme 'doom-henna) ;; Favorite
+;; (setq doom-theme 'doom-homage-black) ;; Favorite
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Make bookmarks auto-persist to disk
@@ -131,13 +138,26 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Rust development setup
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(with-eval-after-load 'treesit
-  (add-to-list 'treesit-language-source-alist
-    '(rust "https://github.com/tree-sitter/tree-sitter-rust" "v0.23.2")))
-(after! rustic
-  (set-tree-sitter! 'rustic-mode 'rust-mode))
+;; (with-eval-after-load 'treesit
+;;   (add-to-list 'treesit-language-source-alist
+;;     '(rust "https://github.com/tree-sitter/tree-sitter-rust" "v0.23.2")))
+;; (after! rustic
+;;   (set-tree-sitter! 'rustic-mode 'rust-mode))
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package! inheritenv
+  :demand nil)
+(use-package! rustic
+  :defer t
+  :init
+  (after! inheritenv
+    (require 'rustic)))
+
+(set-tree-sitter! 'rust-mode 'rust-ts-mode
+  '((rust :url "https://github.com/tree-sitter/tree-sitter-rust" :rev "v0.23.2")))
+(after! rustic
+  (require 'inheritenv)
+  (require 'rustic-doc))
+
 ;; Web browsing and web search
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (map! :leader
