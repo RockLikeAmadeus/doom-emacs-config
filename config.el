@@ -1,11 +1,18 @@
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
 
-;; SYSTEM-WIDE EMERGENCY FIX: Stop rustic macro compilation crashes
-(unless (fboundp 'rustic--inheritenv)
-  (defmacro rustic--inheritenv (&rest body)
-    `(if (featurep 'inheritenv)
-         (inheritenv-apply (lambda () ,@body))
-       ,@body)))
+;; SYSTEM-WIDE EMERGENCY FIX: Stop rustic macro compilation crashes;;
+;; Force-declare the macro definition directly to eliminate lexical-binding drift
+(defmacro rustic--inheritenv (&rest body)
+  (declare (indent defun))
+  `(if (featurep 'inheritenv)
+       (inheritenv-apply (lambda () ,@body))
+     ,@body))
+
+;; (unless (fboundp 'rustic--inheritenv)
+;;   (defmacro rustic--inheritenv (&rest body)
+;;     `(if (featurep 'inheritenv)
+;;          (inheritenv-apply (lambda () ,@body))
+;;        ,@body)))
 
 ;; Place your private configuration here! Remember, you do not need to run 'doom
 ;; sync' after modifying this file!
@@ -94,8 +101,8 @@
 ;; (setq doom-theme 'doom-snazzy)
 ;; (setq doom-theme 'doom-vibrant)
 ;; (setq doom-theme 'doom-peacock)
-(setq doom-theme 'doom-henna) ;; Favorite
-;; (setq doom-theme 'doom-homage-black) ;; Favorite
+;; (setq doom-theme 'doom-henna) ;; Favorite
+(setq doom-theme 'doom-homage-black) ;; Favorite
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Make bookmarks auto-persist to disk
@@ -144,26 +151,56 @@
 ;; (after! rustic
 ;;   (set-tree-sitter! 'rustic-mode 'rust-mode))
 
-(use-package! inheritenv
-  :demand nil)
+;; 1. Handle language grammars outside initialization hooks
+(set-tree-sitter! 'rust-mode 'rust-ts-mode
+  '((rust :url "https://github.com" :rev "v0.23.2")))
+
+;; 2. Configure rustic cleanly using standard lazy loading
 (use-package! rustic
   :defer t
-  :init
-  (after! inheritenv
-    (require 'rustic)))
+  :config
+  ;; Safely append the submodule dependency context to prevent out-of-order execution
+  (with-eval-after-load 'rustic-doc
+    (require 'rustic))
 
-(set-tree-sitter! 'rust-mode 'rust-ts-mode
-  '((rust :url "https://github.com/tree-sitter/tree-sitter-rust" :rev "v0.23.2")))
-(after! rustic
-  (require 'inheritenv)
-  (require 'rustic-doc))
+  (setq lsp-rust-analyzer-cargo-target-dir t))
 
-(setq lsp-rust-analyzer-cargo-target-dir t) ;; To prevent analyzer locking build dir
+;; Settings here to make sure RET does a newline-and-indent
+(with-eval-after-load 'evil-collection
+  ;; Unbind the helpful action from standard editing maps
+  (define-key evil-normal-state-map (kbd "RET") nil)
+  (define-key evil-insert-state-map (kbd "RET") nil)
+
+  ;; Force Rust modes to strictly use smart indentation for RET
+  (add-hook! '(rust-mode-hook rustic-mode-hook)
+    (local-set-key (kbd "RET") #'newline-and-indent)
+    (local-set-key (kbd "<return>") #'newline-and-indent)))
+
+
+;; (use-package! inheritenv
+;;   :demand nil
+;;   :commands (inheritenv-apply))
+;; (use-package! rustic
+;;   :defer t
+;;   :init
+;;   (after! inheritenv
+;;     (require 'rustic)))
+
+;; (set-tree-sitter! 'rust-mode 'rust-ts-mode
+;;   '((rust :url "https://github.com/tree-sitter/tree-sitter-rust" :rev "v0.23.2")))
+;; (after! rustic
+;;   (require 'inheritenv)
+;;   (require 'rustic-doc))
+
+;; (setq lsp-rust-analyzer-cargo-target-dir t) ;; To prevent analyzer locking build dir
 
 ;; Web browsing and web search
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (map! :leader
       :desc "Search the web with EWW" "s w" #'eww)
+;; Prevent EWW from acting like a temporary popup and closing on ESC
+(set-popup-rule! "^\\*eww" :ignore t)
+
 ;; (after! eww ;; Doesn't work, because google requires javascript
 ;; (setq eww-search-prefix "https://google.com/search?q="))
 
