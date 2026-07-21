@@ -176,6 +176,40 @@
     (local-set-key (kbd "RET") #'newline-and-indent)
     (local-set-key (kbd "<return>") #'newline-and-indent)))
 
+(after! rustic
+  ;; 1. Send all normal cargo builds/tests/checks to the right split
+  (set-popup-rule! "^\\*rustic-compilation" :side 'right :size 0.4 :select t :ttl nil))
+
+  ;; 2. The ultimate fallback catch: Intercept window creation at the core Emacs level
+  ;; This was an attempt to make cargo run behave as a special case and open in the current
+  ;; active window, but after lots of trying, I couldn't make it work. Maybe try again
+  ;; with a better AI model.
+  ;; (add-to-list 'display-buffer-alist
+  ;;              `(,(lambda (buf-name _) (string-match-p "^\\*rustic-compilation" buf-name))
+  ;;                (lambda (buf alist)
+  ;;                  (if (with-current-buffer buf
+  ;;                        (and (boundp 'compilation-arguments)
+  ;;                             (stringp (car compilation-arguments))
+  ;;                             (string-match-p "cargo run" (car compilation-arguments))))
+  ;;                      ;; IF CARGO RUN: Fully break out of Doom's popup structure
+  ;;                      (let ((+popup--rules nil))
+  ;;                        (display-buffer-same-window buf alist))
+  ;;                    ;; OTHERWISE: Manually hand it off to Doom's right popup engine
+  ;;                    (+popup-display-buffer-stacked-side-h buf alist))))))
+
+;; (after! rustic
+;;   ;; 1. Send all default rustic compilation windows to the right side
+;;   (set-popup-rule! "^\\*rustic-compilation" :side 'right :size 0.4 :select t :ttl nil)
+
+;;   ;; 2. Catch the specific buffer when it's running a 'cargo run' process to open in active window
+;;   (add-to-list 'display-buffer-alist
+;;                '((lambda (buf-name action)
+;;                    (and (string-match-p "^\\*rustic-compilation" buf-name)
+;;                         (with-current-buffer buf-name
+;;                           (and (boundp 'compilation-arguments)
+;;                                (string-match-p "cargo run" (car compilation-arguments))))))
+;;                  (display-buffer-same-window))))
+
 
 ;; (use-package! inheritenv
 ;;   :demand nil
