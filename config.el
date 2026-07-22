@@ -59,6 +59,8 @@
 (setq org-agenda-files
       (list (expand-file-name "urh/tasks/" (getenv "SECONDBRAIN"))
             (expand-file-name "urh/inbox.org" (getenv "SECONDBRAIN"))))
+(setq org-roam-directory (expand-file-name "pkm/" (getenv "SECONDBRAIN")))
+(org-roam-db-autosync-mode)
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
