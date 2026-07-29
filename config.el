@@ -59,6 +59,8 @@
 (setq org-agenda-files
       (list (expand-file-name "urh/tasks/" (getenv "SECONDBRAIN"))
             (expand-file-name "urh/inbox.org" (getenv "SECONDBRAIN"))))
+(setq org-roam-directory (expand-file-name "pkm/" (getenv "SECONDBRAIN")))
+(org-roam-db-autosync-mode)
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -143,6 +145,11 @@
 (setq highlight-nonselected-windows nil)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; General development setup
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Rust development setup
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; (with-eval-after-load 'treesit
@@ -166,15 +173,16 @@
   (setq lsp-rust-analyzer-cargo-target-dir t))
 
 ;; Settings here to make sure RET does a newline-and-indent
-(with-eval-after-load 'evil-collection
-  ;; Unbind the helpful action from standard editing maps
-  (define-key evil-normal-state-map (kbd "RET") nil)
-  (define-key evil-insert-state-map (kbd "RET") nil)
+;; (with-eval-after-load 'evil-collection
+;;   ;; Unbind the helpful action from standard editing maps
+;;   (define-key evil-normal-state-map (kbd "RET") nil)
+;;   (define-key evil-insert-state-map (kbd "RET") nil)
 
-  ;; Force Rust modes to strictly use smart indentation for RET
-  (add-hook! '(rust-mode-hook rustic-mode-hook)
-    (local-set-key (kbd "RET") #'newline-and-indent)
-    (local-set-key (kbd "<return>") #'newline-and-indent)))
+;;   ;; Force Rust modes to strictly use smart indentation for RET
+;;   (add-hook! '(rust-mode-hook rustic-mode-hook)
+;;     (local-set-key (kbd "RET") #'newline-and-indent)
+;;     (local-set-key (kbd "<return>") #'newline-and-indent)))
+
 
 (after! rustic
   ;; 1. Send all normal cargo builds/tests/checks to the right split
