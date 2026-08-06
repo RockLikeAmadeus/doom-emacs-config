@@ -1,4 +1,7 @@
-`C-z` - "undo" state - Use this command when you get into a weird state that seems to break Evil mode. Also make sure CAPS lock is not active.
+- `C-z` - "undo" state - Use this command when you get into a weird state that seems to break Evil mode. Also make sure CAPS lock is not active.
+- `SPC .` - Switch open buffer.
+- `SPC ,` - Switch open buffer in current project.
+
 
 # Org Mode
 
@@ -28,6 +31,14 @@
 - `SPC m p p ?` - major put priority - Assign a priority (A, B, C) to a task
 
 - `SPC m l l` - 'org-insert-link' - Create a new file and link to it from here (it wants the file extension or protocol first I think, probably `org`, followed by the path)
+
+
+# Code Editing
+
+- `z a` - Expand or collapse the currently open code block (`z o` or `z c` to explicitly open or close).
+- `g c c` - Comment or uncomment the current line of code.
+- `K` - `lsp-describe-thing-at-point`
+
 
 
 # Keep these repos synced

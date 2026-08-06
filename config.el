@@ -60,7 +60,7 @@
       (list (expand-file-name "urh/tasks/" (getenv "SECONDBRAIN"))
             (expand-file-name "urh/inbox.org" (getenv "SECONDBRAIN"))))
 (setq org-roam-directory (expand-file-name "pkm/" (getenv "SECONDBRAIN")))
-(org-roam-db-autosync-mode)
+;; (org-roam-db-autosync-mode)
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -156,7 +156,10 @@
 ;;   (add-to-list 'treesit-language-source-alist
 ;;     '(rust "https://github.com/tree-sitter/tree-sitter-rust" "v0.23.2")))
 ;; (after! rustic
-;;   (set-tree-sitter! 'rustic-mode 'rust-mode))
+;; ;; Add this to your ~/.config/doom/config.el
+;; (after! rustic
+  ;; (add-hook 'rustic-mode-hook #'lsp!))
+
 
 ;; 1. Handle language grammars outside initialization hooks
 (set-tree-sitter! 'rust-mode 'rust-ts-mode
