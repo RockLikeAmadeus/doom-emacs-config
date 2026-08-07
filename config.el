@@ -173,7 +173,11 @@
   (with-eval-after-load 'rustic-doc
     (require 'rustic))
 
+
   (setq lsp-rust-analyzer-cargo-target-dir t))
+
+  (setq lsp-rust-analyzer-cargo-run-build-scripts t
+      lsp-rust-analyzer-proc-macro-enable t)
 
 ;; Settings here to make sure RET does a newline-and-indent
 ;; (with-eval-after-load 'evil-collection
