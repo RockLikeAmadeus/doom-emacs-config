@@ -38,6 +38,9 @@
 - `z a` - Expand or collapse the currently open code block (`z o` or `z c` to explicitly open or close).
 - `g c c` - Comment or uncomment the current line of code.
 - `K` - `lsp-describe-thing-at-point`
+- `g d` - Go to definition
+- `C-o` - (better-jumper-jump-backward) - Navigate outward (back)
+- `C-i` - (better-jumper-jump-forward) - Navigate inward (forward)
 
 
 
