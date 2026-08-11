@@ -39,7 +39,7 @@
      ;; doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;;;;;;;;;;;;;;;;;;; sudo apt install fonts-iosevka
 ;; (setq doom-font (font-spec :family "Iosevka" :size 14 :weight 'ultra-bold)
-(setq doom-font (font-spec :family "Iosevka" :size 14 :weight 'bold)
+(setq doom-font (font-spec :family "Iosevka Term" :size 14 :weight 'bold)
     ;; doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;;;;;;;;;;;;;;;;;;; sudo apt install fonts-monoid
 ;; (setq doom-font (font-spec :family "Monoid" :size 11 :weight 'thin)
@@ -54,7 +54,7 @@
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;;;;;;;;;;;;;;;;;;; Installed by default on Ubuntu
 ;; (setq doom-font (font-spec :family "Ubuntu Mono" :size 11 :weight 'thin)
-     doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+     doom-variable-pitch-font (font-spec :family "Iosevka Aile" :size 13))
 ;; ;
                                         ;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
