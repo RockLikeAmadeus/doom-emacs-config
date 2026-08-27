@@ -8,6 +8,10 @@
        (inheritenv-apply (lambda () ,@body))
      ,@body))
 
+;; DEFINE SOME CONSTANTS THAT I'M LIKELY TO REFERENCE
+(defconst inbox-dir-name "0_inbox"
+  "The directory name for the PARA inbox")
+
 ;; (unless (fboundp 'rustic--inheritenv)
 ;;   (defmacro rustic--inheritenv (&rest body)
 ;;     `(if (featurep 'inheritenv)
@@ -81,12 +85,7 @@
               (directory-files-recursively
                (expand-file-name "1_projects" (getenv "SECONDBRAIN"))
                "\\.org$")))
-
-;; (setq org-agenda-files
-;;       (list (expand-file-name "0_inbox" (getenv "SECONDBRAIN"))
-;;             (expand-file-name "1_projects" (getenv "SECONDBRAIN"))
-;;             (expand-file-name "0_inbox/_task_inbox.org" (getenv "SECONDBRAIN"))))
-;; (setq org-roam-directory (expand-file-name "pkm/" (getenv "SECONDBRAIN")))
+; (setq org-roam-directory (expand-file-name "pkm/" (getenv "SECONDBRAIN")))
 ;; (org-roam-db-autosync-mode)
 
 
@@ -143,13 +142,13 @@
 ;; Evil cursor navigation settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq scroll-conservatively 101) ; Scroll line-by-line when cursor hits edge
-(setq scroll-margin 12)           ; Keep 5 lines of context above/below cursor
+(setq scroll-margin 15)           ; Keep 5 lines of context above/below cursor
 ;; Adjust your operating system's key repeat rate and repeat delay for more
 ;; responsive cursor navigation as well
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; Org Settings
+;; More Org Settings
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (after! org
@@ -174,8 +173,30 @@
 ;; Org Settings - Capture
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-;; (after! org
-  ;; (setq org-directory)
+(with-eval-after-load 'org
+  ;; (setq org-inbox-directory (expand-file-name "0_inbox" (getenv "SECONDBRAIN"))) ; Added by me
+  ;; (setq org-default-notes-file (expand-file-name (expand-file-name inbox-dir-name org-directory) (getenv "SECONDBRAIN"))))
+  )
+
+;; 2. Once Doom loads Org, aggressively override the template targets
+(after! org
+  (let ((notes-inbox-file (expand-file-name "notes.org"
+                                         (expand-file-name inbox-dir-name org-directory))))
+    ;; Update the fallback variable just in case, though this might not be used by doom anyway
+    (setq org-default-notes-file notes-inbox-file)
+
+    ;; Force Doom's default 'n' (Notes) template to use your new folder path
+    (setcdr (assoc "n" org-capture-templates)
+            `("New note" entry
+              (file ,notes-inbox-file)
+              "* %u %?\n%i\n%a" :prepend t))
+
+    ;; Force Doom's default 't' (Tasks) template to use your new folder path
+    ;; (setcdr (assoc "t" org-capture-templates)
+    ;;         `("New task" entry
+    ;;           (file ,my-inbox-file)
+    ;;           "* TODO %?\n%i\n%a" :prepend t))
+    ))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup to make active windows more pronounced (consider turning off eventually)

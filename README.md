@@ -32,6 +32,12 @@
   - For a normal link, don't select any of the suggested protocols, just C-y to paste.
 - `SPC m x` - make x - `org-toggle-checkbox`
 
+## Capture
+
+You can capture different types of things to org files automatically using `SPC X` (`org-capture`)
+
+After entering a new task, note, etc., press `C-c C-c` to save it to the appropriate file.
+
 ## Org Agenda
 
 ## Tables
