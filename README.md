@@ -2,11 +2,34 @@
 - `SPC .` - Switch open buffer.
 - `SPC ,` - Switch open buffer in current project.
 
+# Dired
+
+## Opening and Exiting
+
+- `SPC .` - open file finder
+- `SPC f d` - find directory - Find and open a directory in dired
+- `q` - quit the Dired buffer
+
+## Basic File Operations
+
+- `+` - Create new directory
+- `C` - Copy the selected file(s)
+- `R` - Move or rename the selected file(s)
+- `D` - Delete the selected file(s) immediately
+
+## Marking Files for Batch Actions
+
+- `m` - mark a file or directory for a batch action
+- `u` - unmark the highlighted file
+- `U` - unmark all files in the buffer
+- `t` - invert all current marks
+- `d` - mark a file for deletion
+- `x` - execute deletion on files marked with "d"
 
 # Org Mode
 
 - `SPC m l l` - major mode link - `org-insert-link` - Insert a new link, OR edit an existing link.
-  - For a normal link, select HTTP, then press escape, followed by `y` to paste the URL.
+  - For a normal link, don't select any of the suggested protocols, just C-y to paste.
 - `SPC m x` - make x - `org-toggle-checkbox`
 
 ## Org Agenda
@@ -49,3 +72,18 @@
 - Doom Config
 - 2B
 - swe-toolbox
+
+# Environment variables
+
+Make sure environment variables are set up properly in `~/.bashrc`.
+
+For example:
+
+``` shell
+export PATH="/home/alec/go/bin:$PATH"
+export PATH="$HOME/.config/emacs/bin:$PATH"
+export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.cargo/bin/cargo:$PATH"
+export RUSTUP_HOME="$HOME/.rustup"
+export SECONDBRAIN="$HOME/Dropbox/"
+```

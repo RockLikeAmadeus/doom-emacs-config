@@ -56,3 +56,4 @@
 (package! gptel :recipe (:nonrecursive t)) ;; AI/LLM package
 (package! inheritenv)
 (package! nov)
+(package! beacon)

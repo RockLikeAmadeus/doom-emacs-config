@@ -39,7 +39,7 @@
      ;; doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;;;;;;;;;;;;;;;;;;; sudo apt install fonts-iosevka
 ;; (setq doom-font (font-spec :family "Iosevka" :size 14 :weight 'ultra-bold)
-(setq doom-font (font-spec :family "Iosevka Term" :size 14 :weight 'bold)
+(setq doom-font (font-spec :family "Iosevka Term" :size 14 :weight 'light)
     ;; doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;;;;;;;;;;;;;;;;;;; sudo apt install fonts-monoid
 ;; (setq doom-font (font-spec :family "Monoid" :size 11 :weight 'thin)
@@ -76,9 +76,17 @@
 ;; (setq org-directory "~/org/")
 (setq org-directory (expand-file-name (getenv "SECONDBRAIN")))
 (setq org-agenda-files
-      (list (expand-file-name "urh/tasks/" (getenv "SECONDBRAIN"))
-            (expand-file-name "urh/inbox.org" (getenv "SECONDBRAIN"))))
-(setq org-roam-directory (expand-file-name "pkm/" (getenv "SECONDBRAIN")))
+      (append (list (expand-file-name "0_inbox" (getenv "SECONDBRAIN"))
+                    (expand-file-name "0_inbox/_task_inbox.org" (getenv "SECONDBRAIN")))
+              (directory-files-recursively
+               (expand-file-name "1_projects" (getenv "SECONDBRAIN"))
+               "\\.org$")))
+
+;; (setq org-agenda-files
+;;       (list (expand-file-name "0_inbox" (getenv "SECONDBRAIN"))
+;;             (expand-file-name "1_projects" (getenv "SECONDBRAIN"))
+;;             (expand-file-name "0_inbox/_task_inbox.org" (getenv "SECONDBRAIN"))))
+;; (setq org-roam-directory (expand-file-name "pkm/" (getenv "SECONDBRAIN")))
 ;; (org-roam-db-autosync-mode)
 
 
@@ -118,12 +126,12 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Display theme
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;; (setq doom-theme 'doom-challenger-deep)
+(setq doom-theme 'doom-challenger-deep)
 ;; (setq doom-theme 'doom-snazzy)
 ;; (setq doom-theme 'doom-vibrant)
 ;; (setq doom-theme 'doom-peacock)
 ;; (setq doom-theme 'doom-henna) ;; Favorite
-(setq doom-theme 'doom-homage-black) ;; Favorite
+;; (setq doom-theme 'doom-homage-black) ;; Favorite
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Make bookmarks auto-persist to disk
@@ -162,6 +170,12 @@
 (setq org-clock-persist 'history)
 (org-clock-persistence-insinuate)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Org Settings - Capture
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+;; (after! org
+  ;; (setq org-directory)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup to make active windows more pronounced (consider turning off eventually)
@@ -316,6 +330,14 @@
   (add-hook 'nov-mode-hook 'visual-line-mode))
   ;; (add-hook 'nov-mode-hook 'variable-pitch-mode))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Beacon
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(use-package! beacon
+  :config
+  (beacon-mode 1)
+  (setq beacon-blink-duration 0.8
+        beacon-size 100))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
