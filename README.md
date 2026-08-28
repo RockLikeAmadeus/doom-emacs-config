@@ -1,3 +1,4 @@
+- `SPC h b b` - describe-bindings - Get live mapping of keyboard bindings in current buffer.
 - `C-z` - "undo" state - Use this command when you get into a weird state that seems to break Evil mode. Also make sure CAPS lock is not active.
 - `SPC .` - Switch open buffer.
 - `SPC ,` - Switch open buffer in current project.
@@ -9,6 +10,10 @@
 - `SPC .` - open file finder
 - `SPC f d` - find directory - Find and open a directory in dired
 - `q` - quit the Dired buffer
+
+## File Sorting
+
+- `o` - `dired-sort-toggle-or-edit` - Toggle sorting between
 
 ## Basic File Operations
 
@@ -72,6 +77,18 @@ After entering a new task, note, etc., press `C-c C-c` to save it to the appropr
 - `C-i` - (better-jumper-jump-forward) - Navigate inward (forward)
 
 
+
+
+# E-reader (nov.el)
+
+Open the nov.el E-reader by simply navigating to a .epub file on the file system and opening it.
+
+- `[ [` or `M-j` - nov-next-document - Go to next chapter
+- `[ [` or `M-k` - nov-previous-document - Go to previous chapter
+- `t` - nov-goto-toc - Go to table of contents
+- nov-history-back - Go back in history
+- nov-history-forward - Go forward in history
+- `q` - evil-quit - Quit the e-reader
 
 # Keep these repos synced
 
