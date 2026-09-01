@@ -11,6 +11,14 @@
 ;; DEFINE SOME CONSTANTS THAT I'M LIKELY TO REFERENCE
 (defconst inbox-dir-name "0_inbox"
   "The directory name for the PARA inbox")
+(defconst projects-dir-name "1_projects"
+  "The directory name for the PARA projects folder")
+(defconst areas-dir-name "2_areas"
+  "The directory name for the PARA areas folder")
+(defconst resources-dir-name "3_resource"
+  "The directory name for the PARA areas folder")
+(defconst archive-dir-name "4_archive"
+  "The directory name for the PARA archive")
 
 ;; (unless (fboundp 'rustic--inheritenv)
 ;;   (defmacro rustic--inheritenv (&rest body)
@@ -79,38 +87,8 @@
 ;; change `org-directory'. It must be set before org loads!
 ;; (setq org-directory "~/org/")
 (setq org-directory (expand-file-name (getenv "SECONDBRAIN")))
-;; (setq org-agenda-files
-;;       (append (list (expand-file-name "0_inbox" (getenv "SECONDBRAIN"))
-;;                     (expand-file-name "0_inbox/_task_inbox.org" (getenv "SECONDBRAIN")))
-;;               (let* ((base-dir "~/org/") ;; Change to your actual Org directory
-;;                      (all-files (directory-files-recursively base-dir "\\.org$"))
-;;                      (exclude-regexp "_future\\|_new_project_template"))
-;;                         (seq-remove (lambda (file)
-;;                                       (string-match-p exclude-regexp file))
-;;                                     all-files))))
-;; ;
+; ;
 (setq org-roam-directory (expand-file-name "pkm/" (getenv "SECONDBRAIN")))
-;; (org-roam-db-autosync-mode)
-;; (setq org-agenda-files
-;;       (let ((base-dir (getenv "SECONDBRAIN")))
-;;         (if (not base-dir)
-;;             (progn
-;;               (message "Warning: SECONDBRAIN environment variable is not set!")
-;;               nil) ;; Returns an empty list safely without crashing
-
-;;           (let* ((inbox-dir (expand-file-name "0_inbox" base-dir))
-;;                  (project-dir (expand-file-name "1_projects" base-dir))
-;;                  (inbox-files (when (file-directory-p inbox-dir)
-;;                                 (directory-files-recursively inbox-dir "\\.org$")))
-;;                  (project-files (when (file-directory-p project-dir)
-;;                                   (directory-files-recursively project-dir "\\.org$")))
-;;                  (all-files (append inbox-files project-files))
-;;                  ;; Exclude _future and _new_project_template from org agenda
-;;                  (exclude-regexp "1_projects/\\(_future\\|_new_project_template\\)"))
-
-;;             (seq-remove (lambda (file)
-;;                           (string-match-p exclude-regexp file))
-;;                         all-files)))))
 
 ;; Set org agenda files
 (setq org-agenda-files
@@ -231,25 +209,51 @@
   ;; (setq org-default-notes-file (expand-file-name (expand-file-name inbox-dir-name org-directory) (getenv "SECONDBRAIN"))))
   )
 
-;; 2. Once Doom loads Org, aggressively override the template targets
+;; Once Doom loads Org, aggressively override the template targets
 (after! org
-  (let ((notes-inbox-file (expand-file-name "notes.org"
-                                         (expand-file-name inbox-dir-name org-directory))))
-    ;; Update the fallback variable just in case, though this might not be used by doom anyway
+  (let ((notes-inbox-file (expand-file-name "notes.org" (expand-file-name inbox-dir-name org-directory)))
+        (tasks-inbox-file (expand-file-name "_task_inbox.org" (expand-file-name inbox-dir-name org-directory)))
+        (journal-file (expand-file-name "_journal.org" (expand-file-name archive-dir-name org-directory))))
+
     (setq org-default-notes-file notes-inbox-file)
 
-    ;; Force Doom's default 'n' (Notes) template to use your new folder path
+    ;; 1. Update Doom's default 'n' template
     (setcdr (assoc "n" org-capture-templates)
             `("New note" entry
               (file ,notes-inbox-file)
               "* %u %?\n%i\n%a" :prepend t))
 
-    ;; Force Doom's default 't' (Tasks) template to use your new folder path
-    ;; (setcdr (assoc "t" org-capture-templates)
-    ;;         `("New task" entry
-    ;;           (file ,my-inbox-file)
-    ;;           "* TODO %?\n%i\n%a" :prepend t))
-    ))
+    ;; 2. Update or add the 't' template
+    (if (assoc "t" org-capture-templates)
+        (setcdr (assoc "t" org-capture-templates)
+                `("New task" entry
+                  (file ,tasks-inbox-file)
+                  "* TODO %?\n%i\n%a" :prepend t))
+      (add-to-list 'org-capture-templates
+                   `("t" "Todo" entry
+                     (file ,tasks-inbox-file)
+                     "* TODO %?\n%i\n%a" :prepend t)))
+
+    ;; 3. Update or add the 'j' template
+    (if (assoc "j" org-capture-templates)
+        (setcdr (assoc "j" org-capture-templates)
+                `("New journal entry" entry
+                  (file ,journal-file)
+                  "* %U %?\n%i\n%a" :prepend t))
+      (add-to-list 'org-capture-templates
+                   `("j" "Journal" entry
+                     (file ,journal-file)
+                     "* %U %?\n%i\n%a" :prepend t)))))
+
+
+
+
+
+
+
+
+
+
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Setup to make active windows more pronounced (consider turning off eventually)
