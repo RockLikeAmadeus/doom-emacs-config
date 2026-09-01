@@ -79,14 +79,63 @@
 ;; change `org-directory'. It must be set before org loads!
 ;; (setq org-directory "~/org/")
 (setq org-directory (expand-file-name (getenv "SECONDBRAIN")))
-(setq org-agenda-files
-      (append (list (expand-file-name "0_inbox" (getenv "SECONDBRAIN"))
-                    (expand-file-name "0_inbox/_task_inbox.org" (getenv "SECONDBRAIN")))
-              (directory-files-recursively
-               (expand-file-name "1_projects" (getenv "SECONDBRAIN"))
-               "\\.org$")))
-; (setq org-roam-directory (expand-file-name "pkm/" (getenv "SECONDBRAIN")))
+;; (setq org-agenda-files
+;;       (append (list (expand-file-name "0_inbox" (getenv "SECONDBRAIN"))
+;;                     (expand-file-name "0_inbox/_task_inbox.org" (getenv "SECONDBRAIN")))
+;;               (let* ((base-dir "~/org/") ;; Change to your actual Org directory
+;;                      (all-files (directory-files-recursively base-dir "\\.org$"))
+;;                      (exclude-regexp "_future\\|_new_project_template"))
+;;                         (seq-remove (lambda (file)
+;;                                       (string-match-p exclude-regexp file))
+;;                                     all-files))))
+;; ;
+(setq org-roam-directory (expand-file-name "pkm/" (getenv "SECONDBRAIN")))
 ;; (org-roam-db-autosync-mode)
+;; (setq org-agenda-files
+;;       (let ((base-dir (getenv "SECONDBRAIN")))
+;;         (if (not base-dir)
+;;             (progn
+;;               (message "Warning: SECONDBRAIN environment variable is not set!")
+;;               nil) ;; Returns an empty list safely without crashing
+
+;;           (let* ((inbox-dir (expand-file-name "0_inbox" base-dir))
+;;                  (project-dir (expand-file-name "1_projects" base-dir))
+;;                  (inbox-files (when (file-directory-p inbox-dir)
+;;                                 (directory-files-recursively inbox-dir "\\.org$")))
+;;                  (project-files (when (file-directory-p project-dir)
+;;                                   (directory-files-recursively project-dir "\\.org$")))
+;;                  (all-files (append inbox-files project-files))
+;;                  ;; Exclude _future and _new_project_template from org agenda
+;;                  (exclude-regexp "1_projects/\\(_future\\|_new_project_template\\)"))
+
+;;             (seq-remove (lambda (file)
+;;                           (string-match-p exclude-regexp file))
+;;                         all-files)))))
+
+;; Set org agenda files
+(setq org-agenda-files
+      (let ((base-dir (getenv "SECONDBRAIN")))
+        (if (not base-dir)
+            (progn
+              (message "Warning: SECONDBRAIN environment variable is not set!")
+              nil)
+
+          (let* ((inbox-dir (expand-file-name "0_inbox" base-dir))
+                 (project-dir (expand-file-name "1_projects" base-dir))
+                 (inbox-files (when (file-directory-p inbox-dir)
+                                (directory-files-recursively inbox-dir "\\.org$")))
+                 (project-files (when (file-directory-p project-dir)
+                                  (directory-files-recursively project-dir "\\.org$")))
+                 (all-files (append inbox-files project-files)))
+
+            ;; Exclude _future and _new_project_template from org agenda
+            (seq-remove (lambda (file)
+                          (let ((parts (file-name-split file)))
+                            ;; Exclude only if the file lives inside those specific subdirectories
+                            (or (member "_future" parts)
+                                (member "_new_project_template" parts))))
+                        all-files)))))
+
 
 
 ;; Whenever you reconfigure a package, make sure to wrap your config in an
@@ -137,6 +186,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (setq bookmark-save-flag 1)
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Scan for projects (need to update this to use the env var)
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(setq projectile-project-search-path '("~/Dropbox/1_projects/"))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Evil cursor navigation settings
@@ -154,7 +207,7 @@
 (after! org
   (setq org-use-fast-todo-selection t)
   (setq org-todo-keywords
-        '((sequence "TODO(t)" "NEXT(n)" "WAITING(w)" "MEETING(m)" "SOMEDAY(s)" "|" "DONE(x)" "CANCELLED(c)" "DELEGATED(d)")))
+        '((sequence "TODO(t)" "PROJECT(p)" "NEXT(n)" "WAITING(w)" "MEETING(m)" "SOMEDAY(s)" "|" "DONE(x)" "CANCELLED(c)" "DELEGATED(d)")))
   (setq org-agenda-clockreport-parameter-plist
         '(:maxlevel 3
           :step day)))
