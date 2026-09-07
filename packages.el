@@ -57,3 +57,4 @@
 (package! inheritenv)
 (package! nov)
 (package! beacon)
+(package! org-remark)

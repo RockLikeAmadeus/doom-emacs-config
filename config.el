@@ -408,6 +408,31 @@
   (add-hook 'nov-mode-hook 'visual-line-mode))
   ;; (add-hook 'nov-mode-hook 'variable-pitch-mode))
 
+;; org-remark for persistent notes and highlights in nov.el e-books
+(after! org
+  ;; 1. Configure the global tracking sub-module
+  ;; Enable global tracking mode to load notes when opening supported files
+  (use-package! org-remark-global-tracking
+    :after-call doom-first-file-hook
+    :config
+    (org-remark-global-tracking-mode +1))
+
+  ;; 2. Configure the main org-remark package
+  (use-package! org-remark
+    :bind
+    (:map org-remark-mode-map
+     ("C-c n r m" . org-remark-mark)
+     ("C-c n r l" . org-remark-mark-line)
+     ("C-c n r o" . org-remark-open)
+     ("C-c n r ]" . org-remark-next)
+     ("C-c n r [" . org-remark-prev))))
+
+;; Configure nov.el integration when nov loads
+(after! nov
+  (use-package! org-remark-nov
+    :config
+    (org-remark-nov-mode +1)))
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Beacon
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;

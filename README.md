@@ -21,6 +21,7 @@
 - `C` - Copy the selected file(s)
 - `R` - Move or rename the selected file(s)
 - `D` - Delete the selected file(s) immediately
+- `I` - Enter edit mode to open buffer as writeable text (VIM bindings)
 
 ## Marking Files for Batch Actions
 
@@ -89,6 +90,9 @@ Open the nov.el E-reader by simply navigating to a .epub file on the file system
 - nov-history-back - Go back in history
 - nov-history-forward - Go forward in history
 - `q` - evil-quit - Quit the e-reader
+
+
+Using the org-remark package, add highlights with `org-remark-mark`, `org-remark-mark-yellow`, or `org-remark-mark-red`.
 
 # Keep these repos synced
 
