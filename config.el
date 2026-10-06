@@ -433,6 +433,13 @@
     :config
     (org-remark-nov-mode +1)))
 
+;; Windows needs this installed to use nov.el.
+;; You can get it here: https://sourceforge.net/projects/gnuwin32/files/unzip/5.51-1/unzip-5.51-1.exe/download?use_mirror=gigenet&download
+(after! nov
+  (if (eq system-type 'windows-nt)
+      (setq nov-unzip-program "C:\\Program Files (x86)\\GnuWin32\\bin\\unzip.exe")))
+
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Beacon
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
