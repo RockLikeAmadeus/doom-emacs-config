@@ -1,4 +1,6 @@
 - `SPC h b b` - describe-bindings - Get live mapping of keyboard bindings in current buffer.
+- `h` - in many major modes (I assume), display help/bindings
+- `SHIFT+ENTER` - open in other active window
 - `C-z` - "undo" state - Use this command when you get into a weird state that seems to break Evil mode. Also make sure CAPS lock is not active.
 - `SPC .` - Switch open buffer.
 - `SPC ,` - Switch open buffer in current project.
@@ -10,6 +12,7 @@
 - `SPC .` - open file finder
 - `SPC f d` - find directory - Find and open a directory in dired
 - `q` - quit the Dired buffer
+- `SPC m h` - Toggle hidden folders and directories
 
 ## File Sorting
 
@@ -21,7 +24,7 @@
 - `C` - Copy the selected file(s)
 - `R` - Move or rename the selected file(s)
 - `D` - Delete the selected file(s) immediately
-- `I` - Enter edit mode to open buffer as writeable text (VIM bindings)
+- `i` - Enter edit mode to open buffer as writeable text (VIM bindings)
 
 ## Marking Files for Batch Actions
 
@@ -46,7 +49,6 @@ After entering a new task, note, etc., press `C-c C-c` to save it to the appropr
 
 ## Org Agenda
 
-## Tables
 
 
 
@@ -59,6 +61,8 @@ After entering a new task, note, etc., press `C-c C-c` to save it to the appropr
 - `RET` - Open the .org file containing the TODO entry at point
 - `J` - Priority down
 - `K` - Priority up
+- `I` - Clock in
+- `O` - Clock out
 
 #### Directly from the .org file containing TODO entries:
 
@@ -67,6 +71,7 @@ After entering a new task, note, etc., press `C-c C-c` to save it to the appropr
 
 - `SPC m l l` - 'org-insert-link' - Create a new file and link to it from here (it wants the file extension or protocol first I think, probably `org`, followed by the path)
 
+## Tables
 
 # Code Editing
 
