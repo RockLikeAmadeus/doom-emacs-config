@@ -4,7 +4,7 @@ On Linux (or WSL):
 
 ==Note: on the second line here, if you're on COSMIC and want the frosted glass effect to work for emacs, replace `emacs` with `emacs-pgtk`==
 
-```
+```shell
 sudo apt update && sudo apt upgrade -y
 sudo apt install -y git emacs ripgrep fd-find cmake libtool-bin libvterm-dev
 git clone --depth 1 https://github.com/doomemacs/core.git ~/.config/emacs
@@ -13,14 +13,14 @@ git clone --depth 1 https://github.com/doomemacs/core.git ~/.config/emacs
 
 enter `y` for yes.
 
-```
+```shell
 echo 'export PATH="$HOME/.config/emacs/bin:$PATH"' >> ~/.bashrc
 source ~/.bashrc
 ```
 
 Now cd into `~/.config`
 
-```
+```shell
 rm -rf doom
 git clone https://github.com/RockLikeAmadeus/doom-emacs-config.git
 mv doom-emacs-config doom
@@ -29,7 +29,7 @@ doom sync
 
 Finally:
 
-```
+```shell
 emacs &
 ```
 
