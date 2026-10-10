@@ -110,8 +110,8 @@
             (seq-remove (lambda (file)
                           (let ((parts (file-name-split file)))
                             ;; Exclude only if the file lives inside those specific subdirectories
-                            (or (member "_future" parts)
-                                (member "_new_project_template" parts))))
+                            (or (member "1_future" parts)
+                                (member "0_new_project_template" parts))))
                         all-files)))))
 
 

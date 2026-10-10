@@ -1,3 +1,12 @@
+# General
+
+- Run with `$ emacsclient -c -a ""`.
+- Sync with `SPC h r r` within emacs or using `$ doom sync`.
+  - First kill the daemon with `$ emacsclient -e "(killemacs)"`
+- Quit with `SPC q r`. 
+
+
+
 - `SPC h b b` - describe-bindings - Get live mapping of keyboard bindings in current buffer.
 - `h` - in many major modes (I assume), display help/bindings
 - `SHIFT+ENTER` - open in other active window
