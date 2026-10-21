@@ -47,11 +47,16 @@
 ;; See 'C-h v doom-font' for documentation and more examples of what they
 ;; accept. For example:
 ;;
-;; (setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
-     ;; doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
+;;(setq doom-font (font-spec :family "Fira Code" :size 12 :weight 'semi-light)
+;;      doom-variable-pitch-font (font-spec :family "sans" :size 13))
+(setq doom-font (font-spec :family "Hack" :size 12 :weight 'semi-bold)
+;; (setq doom-font (font-spec :family "Inconsolata" :size 14 :weight 'regular)
+;; (setq doom-font (font-spec :family "Ubuntu Mono" :size 14 :weight 'regular)
+;; (setq doom-font (font-spec :family "DejaVu Sans Mono" :size 14 :weight 'regular)
+      doom-variable-pitch-font (font-spec :family "sans" :size 14))
 ;;;;;;;;;;;;;;;;;;;; sudo apt install fonts-iosevka
 ;; (setq doom-font (font-spec :family "Iosevka" :size 14 :weight 'ultra-bold)
-(setq doom-font (font-spec :family "Iosevka Term" :size 14 :weight 'light)
+;; (setq doom-font (font-spec :family "Iosevka Term" :size 14 :weight 'light)
     ;; doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;;;;;;;;;;;;;;;;;;; sudo apt install fonts-monoid
 ;; (setq doom-font (font-spec :family "Monoid" :size 11 :weight 'thin)
@@ -66,7 +71,7 @@
 ;;      doom-variable-pitch-font (font-spec :family "Fira Sans" :size 13))
 ;;;;;;;;;;;;;;;;;;;; Installed by default on Ubuntu
 ;; (setq doom-font (font-spec :family "Ubuntu Mono" :size 11 :weight 'thin)
-     doom-variable-pitch-font (font-spec :family "Iosevka Aile" :size 13))
+     ;; doom-variable-pitch-font (font-spec :family "Iosevka Aile" :size 13))
 ;; ;
                                         ;
 ;; If you or Emacs can't find your font, use 'M-x describe-font' to look them
@@ -152,11 +157,11 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Display theme
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-(setq doom-theme 'doom-challenger-deep)
+;; (setq doom-theme 'doom-challenger-deep)
 ;; (setq doom-theme 'doom-snazzy)
 ;; (setq doom-theme 'doom-vibrant)
 ;; (setq doom-theme 'doom-peacock)
-;; (setq doom-theme 'doom-henna) ;; Favorite
+(setq doom-theme 'doom-henna) ;; Favorite
 ;; (setq doom-theme 'doom-homage-black) ;; Favorite
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
